@@ -7,22 +7,41 @@
         WindowStartupLocation="CenterScreen">
 
     <Grid Margin="20">
-        <!-- Drop Zone -->
         <Border Style="{StaticResource DropBorderStyle}"
-                AllowDrop="True" Drop="ImageDrop">
+                AllowDrop="True" 
+                Drop="ImageDrop">
 
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="Drag and Drop Images Here"
-                           FontSize="20" Foreground="LightGray" FontWeight="Bold" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                    <TextBlock Text="Save to: " 
+                               FontSize="14" 
+                               FontWeight="Bold" 
+                               VerticalAlignment="Center" />
+                    <TextBox Text="{Binding TargetFolder, Mode=OneWay}" 
+                             MinWidth="400" 
+                             TextAlignment="Center"
+                             IsReadOnly="True" 
+                             Margin="5,0,10,0"/>
+                    <Button Content="Change Folder" 
+                            Command="{Binding ChangeFolderCommand}" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+                </StackPanel>
 
-                <!--<Image Source="Images/upload_icon.png" Width="60" Opacity="0.7"
-                       RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
-                    </Image.RenderTransform>
-                </Image>-->
+                <TextBlock Text="Images"
+                           Grid.Row="1"
+                           FontSize="14" 
+                           Foreground="LightGray" 
+                           FontWeight="Bold" />
 
-                <ListBox ItemsSource="{Binding Images}" Style="{StaticResource StyledListBox}">
+                <ListBox Grid.Row="2" ItemsSource="{Binding Images}" Style="{StaticResource StyledListBox}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="5">
@@ -35,11 +54,19 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Button Content="Sort Images"
-                        Command="{Binding SortImagesCommand}"
-                        Style="{StaticResource PrimaryButtonStyle}"
-                        Margin="15,10,15,0"/>
-            </StackPanel>
+                <StackPanel Grid.Row="3" 
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="Sort"
+                            Command="{Binding SortImagesCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Margin="15,5"/>
+                    <Button Content="Browse" 
+                            Command="{Binding BrowseImagesCommand}" 
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Margin="15,5"/>
+                </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Window>
