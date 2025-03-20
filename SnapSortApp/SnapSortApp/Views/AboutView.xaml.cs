@@ -1,28 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using SnapSortApp.Services;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SnapSortApp.Views
 {
-    /// <summary>
-    /// Interaction logic for AboutView.xaml
-    /// </summary>
     public partial class AboutView : UserControl
     {
+        public string AppName => AppInfoHelper.AppName;
+        public string AppVersion => AppInfoHelper.AppVersion;
+        public string Copyright => AppInfoHelper.Copyright;
+        public string HelpLink => AppInfoHelper.HelpLink;
+
         public AboutView()
         {
             InitializeComponent();
+            DataContext = this;
         }
     }
 }
