@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SnapSortApp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="20">
+    <Grid>
         <Border Style="{StaticResource DropBorderStyle}"
                 AllowDrop="True" 
                 Drop="ImageDrop">
