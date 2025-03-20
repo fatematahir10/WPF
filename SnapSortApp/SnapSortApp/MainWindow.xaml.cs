@@ -23,9 +23,28 @@ namespace SnapSortApp
             DataContext = new MainWindowViewModel();
         }
 
-        private void ImageDrop(object sender, DragEventArgs e)
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainWindowViewModel)?.ImageDrop(sender, e);
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+                viewModel.SelectedTabIndex = 0;
+            }
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+                viewModel.SelectedTabIndex = 1;
+            }
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+                viewModel.SelectedTabIndex = 1;
+            }
         }
     }
 }
