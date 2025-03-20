@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Media.Imaging;
 
 
 namespace SnapSortApp.Models
@@ -22,6 +23,19 @@ namespace SnapSortApp.Models
             using (var img = Image.FromFile(filePath))
             {
                 Resolution = $"{img.Width}x{img.Height}";
+            }
+        }
+
+        public BitmapImage Thumbnail
+        {
+            get
+            {
+                BitmapImage bitmap = new();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(FilePath);
+                bitmap.DecodePixelWidth = 100;
+                bitmap.EndInit();
+                return bitmap;
             }
         }
     }

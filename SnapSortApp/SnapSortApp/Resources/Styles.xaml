@@ -19,7 +19,7 @@
         <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
     </Style>
 
-    <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+    <Style TargetType="Button">
         <Setter Property="Background" Value="{StaticResource HighlightColor}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="14"/>
@@ -37,14 +37,31 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="StyledListBox" TargetType="ListBox">
+    <Style TargetType="ListBox">
         <Setter Property="MinWidth" Value="400"/>
         <Setter Property="MinHeight" Value="220"/>
-        <Setter Property="Background" Value="#333"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource BorderColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
     </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="Background" Value="{StaticResource MainBackground}"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
 </ResourceDictionary>
