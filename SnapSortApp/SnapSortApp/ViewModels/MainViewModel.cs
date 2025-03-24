@@ -1,15 +1,11 @@
 ﻿using Microsoft.Win32;
 using SnapSortApp.Models;
 using SnapSortApp.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using SnapSortApp.Views;
 
 namespace SnapSortApp.ViewModels
 {
@@ -22,12 +18,13 @@ namespace SnapSortApp.ViewModels
         public ICommand SortImagesCommand { get; }
         public ICommand ChangeFolderCommand { get; }
         public ICommand BrowseImagesCommand { get; }
-
+        public ICommand RenameImagesCommand { get; }
         public MainViewModel()
         {
             SortImagesCommand = new RelayCommand(SortImages);
             ChangeFolderCommand = new RelayCommand(ChangeFolder);
             BrowseImagesCommand = new RelayCommand(BrowseImages);
+            RenameImagesCommand = new RelayCommand(RenameImages, CanRenameImages);
         }
 
         private void BrowseImages()
@@ -109,6 +106,56 @@ namespace SnapSortApp.ViewModels
                 TargetFolder = System.IO.Path.GetDirectoryName(dialog.FileName) ?? TargetFolder;
                 OnPropertyChanged(nameof(TargetFolder));
             }
+        }
+
+        private bool CanRenameImages()
+        {
+            return Images.Count > 0;
+        }
+
+        private void RenameImages()
+        {
+            if (Images.Count == 0)
+            {
+                MessageBox.Show("No images to rename!", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            string prefix = PromptUserForPrefix();
+            if (string.IsNullOrWhiteSpace(prefix))
+                return;
+
+            int counter = 1;
+            foreach (var image in Images.ToList())
+            {
+                string directory = Path.GetDirectoryName(image.FilePath);
+                string extension = Path.GetExtension(image.FilePath);
+                string newFileName = $"{prefix}_{counter:D3}{extension}";
+                string newFilePath = Path.Combine(directory, newFileName);
+
+                try
+                {
+                    File.Move(image.FilePath, newFilePath);
+                    image.FilePath = newFilePath;
+                    counter++;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error renaming {image.FileName}: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            MessageBox.Show("Images renamed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private string PromptUserForPrefix()
+        {
+            RenameDialog dialog = new RenameDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                return dialog.Prefix;
+            }
+            return null;
         }
     }
 }

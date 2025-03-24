@@ -14,7 +14,7 @@ namespace SnapSortApp.Models
     {
         public string FilePath { get; set; }
         public string FileName => Path.GetFileName(FilePath);
-        public long FileSize => new FileInfo(FilePath).Length / 1024; // KB
+        public long FileSize => new FileInfo(FilePath).Length / 1024; 
         public string Resolution { get; set; }
 
         public ImageModel(string filePath)
@@ -31,10 +31,15 @@ namespace SnapSortApp.Models
             get
             {
                 BitmapImage bitmap = new();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(FilePath);
-                bitmap.DecodePixelWidth = 100;
-                bitmap.EndInit();
+                using (FileStream stream = new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.DecodePixelWidth = 100;
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
                 return bitmap;
             }
         }

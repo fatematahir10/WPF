@@ -66,10 +66,14 @@
                     <Button Content="Sort"
                             Command="{Binding SortImagesCommand}"
                             Margin="5"/>
+                    <Button Content="Bulk Rename" 
+                            Command="{Binding RenameImagesCommand}" 
+                            Margin="5"/>
                     <Button Content="Browse" 
                             Command="{Binding BrowseImagesCommand}"
                             Margin="5 5 0 5"/>
                 </StackPanel>
+
             </Grid>
         </Border>
     </Grid>
